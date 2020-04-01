@@ -40,7 +40,7 @@ spec:
 #  securityContext:
 #    fsGroup: 2000
 #    runAsNonRoot: true
-#    runAsUser: 1000    
+#    runAsUser: 1000
   template:
     metadata:
       labels:
@@ -54,6 +54,10 @@ spec:
     {{- if (.Values.nodeSelector) and (eq .Values.prometheus.nodeSelector false) }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.prometheus.securityContext }}
+      securityContext:
+{{ toYaml .Values.prometheus.securityContext | indent 8 }}
     {{- end }}
     {{- if .Values.prometheus.nodeSelector }}
       nodeSelector:
